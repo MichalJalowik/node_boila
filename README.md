@@ -1,5 +1,5 @@
 <p align="center">
-  <a target="blank"><img src="docs/hashCode.png" width="200" alt="Wire Edge Logo" /></a>
+  <a target="blank"><img src="docs/wire_edge_logo.png" width="200" alt="Wire Edge Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
