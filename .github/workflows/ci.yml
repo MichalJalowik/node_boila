@@ -1,0 +1,44 @@
+name: "CI"
+
+on: [pull_request, push]
+  
+
+jobs:
+  ci_api:
+    runs-on: [self-hosted, linux]
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Use Node.js"
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+     
+      - uses: c-py/action-dotenv-to-setenv@v2
+        with:
+          env-file: envfiles/local.env
+
+      - name: Install all dependencies
+        run: npm ci
+
+      - name: Install lcov
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov postgresql-client
+          
+      - name: Run tests
+        working-directory: ./docker
+        run: docker-compose run test-runner
+
+      - name: Report code coverage
+        uses: zgosalvez/github-actions-report-lcov@v1
+        with:
+          coverage-files: coverage/lcov.info
+          minimum-coverage: 90
+          artifact-name: code-coverage-report
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run lint check
+        run: npm run lint
+
