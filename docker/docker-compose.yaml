@@ -27,10 +27,13 @@ services:
 
   test-db:
     image: postgres:14
+    # command: ["postgres", "-c", "log_statement=${PSQL_LOGS:-none}"]
     environment:
       - POSTGRES_USER=db_user
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=testing_db
+      - POSTGRES_DB=test_db
+    ports:
+      - '5432:5432'
 
   test-runner:
     image: node:18-buster
@@ -39,12 +42,15 @@ services:
     volumes:
       - ..:/app
     depends_on:
-      db:
+      test-db:
         condition: service_started
     env_file:
       - ../envfiles/local.env
     environment:
-      - PG_DB=testing_db
+      - PG_DB=test_db
       - PG_DB_USER=db_user
       - PG_DB_PASSWORD=password
-    command: npm run test
+      - DB_HOST=test-db
+      - DB_PORT=5432
+      - NODE_ENV=test
+    command: npm run test:watch

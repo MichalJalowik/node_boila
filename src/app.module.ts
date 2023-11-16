@@ -12,7 +12,11 @@ import { CharacterModule } from './character/character.module';
       envFilePath: 'envfiles/local.env',
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({ ...getDbConfig(true) }),
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        ...getDbConfig(true),
+      }),
+    }),
     CharacterModule,
   ],
   controllers: [AppController],

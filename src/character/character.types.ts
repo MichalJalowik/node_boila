@@ -1,4 +1,5 @@
 import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
+import { Character } from './character.model';
 
 export enum Episodes {
   NEWHOPE = 'NewHope',
@@ -21,4 +22,12 @@ export class CharacterDto {
 
   @IsOptional()
   planet?: string;
+}
+
+export interface CharacterPaginatedResponse {
+  data: Character[];
+  count: number;
+  total: number;
+  page: number;
+  pageCount: number;
 }
