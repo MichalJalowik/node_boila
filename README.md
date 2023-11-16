@@ -12,23 +12,44 @@
 
 [Nest](https://github.com/nestjs/nest) based framework TypeScript starter repository.
 
-## Installation
-
+## Installation and run
+1. npm
 ```bash
 $ npm ci
 ```
-
-## Running the app
-
+2. build
 ```bash
-# development
-$ npm run start
+$ npm run build
+```
+3. run api -> from /docker dir
+```bash
+$ docker-compose up api
+```
+4. run swagger
+```http
+localhost:3000/swagger
+```
 
-# watch mode
-$ npm run start:dev
+## Migrations
+Generate migrations:
+1. go into /docker dir
+2. go inside api container
+```bash
+$ docker-compose exec api bash
+```
+3. run migration:generate command to update db schema
+```bash
+$ npm run typeorm migration:generate src/migrations/<migration_file_name>
+```
+4. you can manually run migrations (migration:run command) but nestjs is set to runs automaticaly
+```bash
+$ npm run typeorm migration:run
+```
 
-# production mode
-$ npm run start:prod
+## Swagger
+Swagger config added to nestJs app
+```http
+<domain>/swagger
 ```
 
 ## Test
@@ -46,4 +67,4 @@ $ npm run test:cov
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+[MIT licensed](LICENSE).

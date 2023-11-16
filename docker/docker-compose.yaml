@@ -1,0 +1,50 @@
+version: "3.7"
+
+services:
+  api:
+    image: node:18-buster
+    user: node
+    working_dir: /app
+    ports:
+      - 3000:3000
+    volumes:
+      - ..:/app
+    depends_on:
+      db:
+        condition: service_started
+    env_file:
+      - ../envfiles/local.env
+    command: npm run start
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=db_user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=db
+    ports:
+      - '5432:5432'
+
+  test-db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=db_user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=testing_db
+
+  test-runner:
+    image: node:18-buster
+    user: node
+    working_dir: /app
+    volumes:
+      - ..:/app
+    depends_on:
+      db:
+        condition: service_started
+    env_file:
+      - ../envfiles/local.env
+    environment:
+      - PG_DB=testing_db
+      - PG_DB_USER=db_user
+      - PG_DB_PASSWORD=password
+    command: npm run test
