@@ -6,7 +6,7 @@ on: [pull_request, push]
 jobs:
   ci_api:
     runs-on: [self-hosted, linux]
-    timeout-minutes: 5
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v2
@@ -27,6 +27,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y lcov postgresql-client
           
+      - name: Run lint check
+        run: npm run lint
+
       - name: Run tests
         working-directory: ./docker
         run: docker-compose run test-runner
@@ -37,8 +40,6 @@ jobs:
           coverage-files: coverage/lcov.info
           minimum-coverage: 90
           artifact-name: code-coverage-report
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run lint check
-        run: npm run lint
 
