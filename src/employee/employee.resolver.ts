@@ -1,21 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { Resolver, Query } from '@nestjs/graphql';
-import { EmployeeService } from './employee.service';
+import { Resolver } from '@nestjs/graphql';
 import { Employee } from './employee.model';
 import { EmployeeDTO } from './employee.dto';
+import { CRUDResolver } from '@nestjs-query/query-graphql';
+import { InjectQueryService, QueryService } from '@nestjs-query/core';
 
-@Injectable()
-@Resolver('employee')
-export class EmployeeResolver {
-  constructor(private readonly employeeService: EmployeeService) {}
-
-  @Query(() => [EmployeeDTO])
-  async findAll(): Promise<Employee[]> {
-    return this.employeeService.findAll();
-  }
-
-  @Query(() => String)
-  sayHello(): string {
-    return 'Hello World!';
+@Resolver(() => EmployeeDTO)
+export class EmployeeResolver extends CRUDResolver(EmployeeDTO) {
+  constructor(
+    @InjectQueryService(Employee)
+    readonly service: QueryService<EmployeeDTO>,
+  ) {
+    super(service);
   }
 }

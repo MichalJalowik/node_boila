@@ -1,29 +1,36 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql';
 import { Department } from './employee.types';
+import { FilterableField, IDField } from '@nestjs-query/query-graphql';
 
-@ObjectType('EmployeeDto', { description: 'Employee dto' })
+@ObjectType('Employee', { description: 'Employee dto' })
 export class EmployeeDTO {
-  @Field(() => ID)
+  @IDField(() => ID)
   id: number;
 
-  @Field()
+  @FilterableField()
   firstname: string;
 
-  @Field()
+  @FilterableField()
   lastname: string;
 
-  @Field()
+  @FilterableField()
   department: Department;
 
-  @Field()
+  @FilterableField()
   title: string;
 
-  @Field()
+  @FilterableField()
   salary: number;
 
-  @Field()
+  @FilterableField()
   date_of_birth?: Date;
 
-  @Field()
+  @FilterableField()
   date_of_joining: Date;
+
+  @Field(() => GraphQLISODateTime)
+  created_at: Date;
+
+  @Field(() => GraphQLISODateTime)
+  updated_at: Date;
 }
