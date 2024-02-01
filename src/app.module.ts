@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { getDbConfig } from './utils/dbConfig';
 import { ConfigModule } from '@nestjs/config';
 import { CharacterModule } from './character/character.module';
+import { EmployeeModule } from './employee/employee.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CharacterModule } from './character/character.module';
       }),
     }),
     CharacterModule,
+    EmployeeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

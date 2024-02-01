@@ -1,0 +1,25 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Employee dto"""
+type EmployeeDto {
+  id: ID!
+  firstname: String!
+  lastname: String!
+  department: String!
+  title: String!
+  salary: Float!
+  date_of_birth: DateTime!
+  date_of_joining: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  findAll: [EmployeeDto!]!
+  sayHello: String!
+}
