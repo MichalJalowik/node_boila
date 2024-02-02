@@ -4,7 +4,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { Employee } from './employee.model';
 import { join } from 'path';
 import { EmployeeResolver } from './employee.resolver';
-import { EmployeeService } from './employee.service';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { EmployeeDTO } from './employee.dto';
@@ -20,7 +19,6 @@ import { EmployeeDTO } from './employee.dto';
       dtos: [{ DTOClass: EmployeeDTO }],
     }),
   ],
-  providers: [EmployeeResolver, EmployeeService],
-  exports: [EmployeeService],
+  providers: [EmployeeResolver],
 })
 export class EmployeeModule {}

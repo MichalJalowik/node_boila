@@ -1,34 +1,29 @@
-<p align="center">
-  <a target="blank"><img src="docs/wire_edge_logo.png" width="200" alt="Wire Edge Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center"> <a href="http://nodejs.org" target="_blank">Node.js</a> boilerplate repo with: NestJs, Rest, GraphQL, TypeORM(Psql), Jest, Docker, Docker-Compose.</p>
-    <p align="center">
-
 ## Description
-
-[Nest](https://github.com/nestjs/nest) based framework TypeScript starter repository.
+Stack: TS, Node, NestJs, TypeOrm, PSQL, GraphQL, NestJs-Query, Jest
 
 ## Installation and run
 1. npm
 ```bash
-$ npm ci
+$ npm ci --legacy-peer-deps
 ```
 2. build
 ```bash
 $ npm run build
 ```
-3. run api -> from /docker dir
+3. run tests -> from /docker dir
+```bash
+$ docker-compose run test-runner
+```
+4. run api -> from /docker dir
 ```bash
 $ docker-compose up api
 ```
-4. run swagger
+5. run graphQL
 ```http
-localhost:3000/swagger
+localhost:3000/graphql
 ```
+6. sample [queries](src/utils/testingGraphQLQueries.ts)
+
 
 ## Migrations
 Generate migrations:
@@ -46,11 +41,6 @@ $ npm run typeorm migration:generate src/migrations/<migration_file_name>
 $ npm run typeorm migration:run
 ```
 
-## Swagger
-Swagger config added to nestJs app
-```http
-<domain>/swagger
-```
 
 ## Test
 from /docker dir

@@ -1,15 +1,12 @@
 import { DataSource } from 'typeorm';
 import { factory } from 'factory-girl';
 import {
-  randAnimalType,
-  randDog,
   randLastName,
   randNumber,
   randPastDate,
   randPersonTitle,
   randUserName,
 } from '@ngneat/falso';
-import { Character } from '../character/character.model';
 import { CustomTypeORMAdapter } from './customTypeOrmAdapter';
 import { Employee } from '../employee/employee.model';
 import { Department } from '../employee/employee.types';
@@ -17,12 +14,6 @@ import { Department } from '../employee/employee.types';
 export type Factory = typeof factory;
 
 export let factoryCached: Factory;
-
-factory.define('Character', Character, {
-  name: randAnimalType(),
-  episodes: [],
-  planet: randDog(),
-});
 
 factory.define('Employee', Employee, {
   firstname: randUserName(),
