@@ -55,9 +55,22 @@ Swagger config added to nestJs app
 ## Test
 from /docker dir
 ```bash
-# unit tests
 $ docker-compose run test-runner
 ```
+
+## Running the app
+from /docker dir
+```bash
+$ docker-compose up api
+```
+this will run db and nest app according to docker-compose config
+
+### GraphQL
+```http
+<domain>/graphql
+```
+
+local development: localhost:3000/graphql
 
 ## License
 

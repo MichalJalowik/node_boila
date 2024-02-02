@@ -89,3 +89,118 @@ query Details($id: ID!) {
     }
 }
 `;
+
+export const employeesSortedByJoinningDayAndSalary = `
+{
+    employees(
+      sorting: [
+        { field: date_of_joining, direction: DESC }
+        { field: salary, direction: DESC }
+      ]
+    ) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          title
+          salary
+          department
+          date_of_birth
+          date_of_joining
+          created_at
+          updated_at
+        }
+        cursor
+      }
+    }
+  }
+  `;
+
+export const filterEmployeesBySalaryRange = `
+  {
+    employees(
+      filter: { and: [{ salary: { gte: 1000 } }, { salary: { lte: 2000 } }] }
+    ) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          title
+          salary
+          department
+          date_of_birth
+          date_of_joining
+          created_at
+          updated_at
+        }
+        cursor
+      }
+    }
+  }
+  `;
+
+export const filterEmployeesByDepartment = `
+{
+    employees(
+      filter: { department: {eq: "finance"} }
+    ) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          title
+          salary
+          department
+          date_of_birth
+          date_of_joining
+          created_at
+          updated_at
+        }
+        cursor
+      }
+    }
+  }
+  `;
+
+export const filterEmployeesByTitle = `
+{
+    employees(
+      filter: { title: {eq: "Manager"} }
+    ) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          title
+          salary
+          department
+          date_of_birth
+          date_of_joining
+          created_at
+          updated_at
+        }
+        cursor
+      }
+    }
+  }
+  `;

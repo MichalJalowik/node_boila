@@ -22,8 +22,6 @@ factory.define('Character', Character, {
   name: randAnimalType(),
   episodes: [],
   planet: randDog(),
-  //   created_at: '2021-09-01T12:46:25.241Z',
-  //   updated_at: '2021-09-01T12:46:25.241Z',
 });
 
 factory.define('Employee', Employee, {
