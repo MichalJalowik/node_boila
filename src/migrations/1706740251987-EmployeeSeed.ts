@@ -28,7 +28,6 @@ export class EmployeeSeed1706740251987 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     const employeeRepo = queryRunner.manager.getRepository<Employee>(Employee);
-
     for (const employee of dataEmployeeSeed) {
       employeeRepo.save(employee);
     }
