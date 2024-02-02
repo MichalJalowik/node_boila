@@ -7,6 +7,7 @@ import { DataSource } from 'typeorm';
 import { Factory, getFactory } from '../utils/factoryGirl';
 import { Employee } from './employee.model';
 import * as GqlQueries from '../utils/testingGraphQLQueries';
+import { EmployeeDTO } from './employee.dto';
 
 describe('EmployeeResolver', () => {
   let app: INestApplication;
@@ -33,6 +34,7 @@ describe('EmployeeResolver', () => {
   });
 
   afterAll(async () => {
+    await source.createQueryRunner().query('TRUNCATE employee;');
     await app.close();
   });
 
@@ -80,5 +82,85 @@ describe('EmployeeResolver', () => {
       where: { id },
     });
     expect(deletedEmployee).toBeNull();
+  });
+
+  it('correctly updates one employee', async () => {
+    const { id } = await factory.create<Employee>('Employee', {
+      lastname: 'White',
+    });
+
+    const query = {
+      query: GqlQueries.updateEmployee,
+      variables: { id },
+    };
+
+    await request(app.getHttpServer()).post('/graphql').send(query).expect(200);
+
+    const updatedEmployee = await source.manager.findOne<Employee>(Employee, {
+      where: { id },
+    });
+    expect(updatedEmployee?.lastname).toEqual('Black');
+  });
+
+  it('correctly updates one employee', async () => {
+    const { id } = await factory.create<Employee>('Employee', {
+      lastname: 'White',
+    });
+
+    const query = {
+      query: GqlQueries.updateEmployee,
+      variables: { id },
+    };
+
+    await request(app.getHttpServer()).post('/graphql').send(query).expect(200);
+
+    const updatedEmployee = await source.manager.findOne<Employee>(Employee, {
+      where: { id },
+    });
+    expect(updatedEmployee?.lastname).toEqual('Black');
+  });
+
+  it('correctly recieved asked employees details', async () => {
+    const { id } = await factory.create<Employee>('Employee');
+
+    const query = {
+      query: GqlQueries.employeeDetails,
+      variables: { id },
+    };
+
+    const response = await request(app.getHttpServer())
+      .post('/graphql')
+      .send(query)
+      .expect(200);
+
+    const responseEmployee = response.body.data['employee'] as EmployeeDTO;
+    expect(responseEmployee.id).toBeDefined();
+    expect(responseEmployee.firstname).toBeDefined();
+    expect(responseEmployee.lastname).toBeDefined();
+    expect(responseEmployee.salary).toBeDefined();
+    expect(responseEmployee.title).toBeDefined();
+    expect(responseEmployee.department).toBeDefined();
+    expect(responseEmployee.date_of_birth).toBeDefined();
+    expect(responseEmployee.date_of_joining).toBeDefined();
+    expect(responseEmployee.updated_at).toBeDefined();
+    expect(responseEmployee.created_at).toBeDefined();
+  });
+
+  it('correctly recieved employees list', async () => {
+    const query = {
+      query: GqlQueries.employeesList,
+    };
+
+    const response = await request(app.getHttpServer())
+      .post('/graphql')
+      .send(query)
+      .expect(200);
+
+    const responseEmployee = response.body.data['employees']['edges'] as Record<
+      string,
+      any
+    >[];
+    const countDbEmployees = await source.manager.count(Employee);
+    expect(responseEmployee.length).toEqual(countDbEmployees);
   });
 });

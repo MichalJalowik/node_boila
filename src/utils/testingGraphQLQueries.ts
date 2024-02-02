@@ -1,5 +1,5 @@
 export const deleteEmployee = `
-mutation Dup($id: ID!) {
+mutation Del($id: ID!) {
     deleteOneEmployee(input: { id: $id }) {
       id
       title
@@ -33,8 +33,8 @@ mutation {
 `;
 
 export const updateEmployee = `
-mutation {
-    updateOneEmployee(input: { id: 3, update: { lastname: "Black" } }) {
+mutation Upd($id: ID!) {
+    updateOneEmployee(input: { id: $id, update: { lastname: "Black" } }) {
       id
       title
       firstname
@@ -43,6 +43,49 @@ mutation {
       department
       date_of_birth
       date_of_joining
+    }
+}
+`;
+
+export const employeesList = `
+{
+    employees{
+      pageInfo{
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges{
+        node{
+          id
+          title
+          salary
+          department
+          date_of_birth
+          date_of_joining
+          created_at
+          updated_at
+        }
+        cursor
+      }
+    }
+  }
+`;
+
+export const employeeDetails = `
+query Details($id: ID!) {
+    employee(id: $id) {
+      id
+      title
+      firstname
+      lastname
+      salary
+      department
+      date_of_birth
+      date_of_joining
+      updated_at
+      created_at
     }
 }
 `;
